@@ -2,7 +2,6 @@
 import socket
 import os
 import json
-import time
 
 SERVER_ADDR = ""
 PORT = 50000
