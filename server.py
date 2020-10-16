@@ -36,7 +36,7 @@ def main():
         s.bind((SERVER_ADDR, PORT))
         while True:
             daten, client_addr = s.recvfrom(1024)
-            print(f"[{client_addr[0]}] {daten.decode()}")
+            print("[{}] {}".format(client_addr[0], daten.decode()))
             s.sendto(data_to_paylod(), client_addr)
     finally:
         s.close()
