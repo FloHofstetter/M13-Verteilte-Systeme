@@ -6,7 +6,7 @@ import random
 
 MSGS = ["Target acquired.", "Hey hey hey!", "Sleep mode activated.",
         "Goodnight.", "There you are.", "Who's there", "Put me down!", "Hibernating.", "What are you doing?", "I'm scared!",
-        "I'm afraid of hights!"]
+        "I'm afraid of heights!"]
 
 def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

@@ -6,6 +6,10 @@ import json
 SERVER_ADDR = ""
 PORT = 50000
 
+TGREEN = '\033[32m' # Green Text
+TRESET = '\033[m'   # reset to the defaults
+TBOLD  = '\033[1m'  # Bold text
+
 
 def cpu_load():
     with open("/proc/loadavg", "r") as cpu_file:
@@ -31,12 +35,16 @@ def data_to_paylod():
 
 
 def main():
+    print("Hello,\nthis is the UDP load deamon!\n")
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         s.bind((SERVER_ADDR, PORT))
         while True:
+            print("Waiting for incomming connection...")
             daten, client_addr = s.recvfrom(1024)
-            print("[{}] {}".format(client_addr[0], daten.decode()))
+            print(TBOLD + "{}".format(client_addr[0]), end="")
+            print(TRESET + " says: \"", end="")
+            print("{}\"".format(daten.decode()))
             s.sendto(data_to_paylod(), client_addr)
     finally:
         s.close()
