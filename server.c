@@ -78,6 +78,9 @@ int main(int arc, char **argsv)
         printf("Waiting on port %d for incomming connection\n", PORT);
         recvlen = recvfrom(fd, &message, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
         
+        payload.load = cpu_load();
+        payload.users = logged_in_users();
+        
         if (recvlen > 0)
         {
             // inform user on stdout
@@ -91,8 +94,6 @@ int main(int arc, char **argsv)
             
             // process request
             // char reply[] = "Das ist eine Antwort";
-            payload.load = cpu_load();
-            payload.users = logged_in_users();
             sendto(fd, &payload, sizeof(payload), 0, (struct sockaddr *)&remaddr, sizeof(remaddr));
             //sendto(fd, (const char *)reply, strlen(reply), MSG_CONFIRM, (const struct sockaddr *) &cliaddr, len); 
 //             if( send(fd , reply , strlen(reply) , 0) < 0)
