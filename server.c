@@ -46,9 +46,7 @@ int main(int arc, char **argsv)
         int users;
     } payload;
     
-    payload.load = cpu_load();
-    payload.users = logged_in_users();
-    
+       
     char message[BUFSIZE];
     char remote_ip[INET_ADDRSTRLEN];
     struct sockaddr_in myaddr;
@@ -93,6 +91,8 @@ int main(int arc, char **argsv)
             
             // process request
             // char reply[] = "Das ist eine Antwort";
+            payload.load = cpu_load();
+            payload.users = logged_in_users();
             sendto(fd, &payload, sizeof(payload), 0, (struct sockaddr *)&remaddr, sizeof(remaddr));
             //sendto(fd, (const char *)reply, strlen(reply), MSG_CONFIRM, (const struct sockaddr *) &cliaddr, len); 
 //             if( send(fd , reply , strlen(reply) , 0) < 0)
