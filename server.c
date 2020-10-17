@@ -80,6 +80,10 @@ int main(int arc, char **argsv)
         
         payload.load = cpu_load();
         payload.users = logged_in_users();
+        printf("Users-s: %d", payload.users);
+        printf("CPU-s: %2.2lf", payload.load);
+        printf("Users-f: %d", logged_in_users());
+        printf("CPU-f: %2.2lf", cpu_load());
         
         if (recvlen > 0)
         {
