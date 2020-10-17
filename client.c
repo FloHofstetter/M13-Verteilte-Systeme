@@ -67,9 +67,9 @@ int main(int argc, char *argv[])
     }
     printf("Got Socket file descriptor: %d\n", socket_file_descriptor);
     
-    server.sin_addr.s_addr = inet_addr("127.0.0.1");
+    server.sin_addr.s_addr = inet_addr(target_host);//inet_addr("127.0.0.1");
     server.sin_family = AF_INET;
-    server.sin_port = htons( 50000 );
+    server.sin_port = htons(target_port);
     
     if (connect(socket_file_descriptor , (struct sockaddr *)&server , sizeof(server)) < 0)
     {
@@ -92,6 +92,7 @@ int main(int argc, char *argv[])
     if( recv(socket_file_descriptor, &payload , 2048 , 0) < 0)
     {
     puts("recv failed");
+    return -1;
     }
     printf("Reply received\n");
     printf("CPU: %2.2lf\n", payload.load);
