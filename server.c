@@ -76,14 +76,13 @@ int main(int arc, char **argsv)
     for (;;)
     {
         printf("Waiting on port %d for incomming connection\n", PORT);
-        recvlen = recvfrom(fd, &message, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
-        
         payload.load = cpu_load();
         payload.users = logged_in_users();
         printf("Users-s: %d\n", payload.users);
         printf("CPU-s: %2.2lf\n", payload.load);
         printf("Users-f: %d\n", logged_in_users());
         printf("CPU-f: %2.2lf\n", cpu_load());
+        recvlen = recvfrom(fd, &message, BUFSIZE, 0, (struct sockaddr *)&remaddr, &addrlen);
         
         if (recvlen > 0)
         {
