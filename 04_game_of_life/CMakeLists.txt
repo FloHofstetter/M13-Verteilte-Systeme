@@ -2,15 +2,19 @@ cmake_minimum_required(VERSION "3.16.3")
 
 project("Distributed_Systems")
 
+set(CMAKE_C_COMPILER mpicc)
+
 set(SOURCES
         src/main.c
         src/showCells.c
+        src/fieldSlice.c
         src/followingCellState.c
         src/followingFieldState.c)
 
 set(HEADERS
         include/main.h
         include/showCells.h
+        include/fieldSlice.h
         include/followingCellState.h
         include/followingFieldState.h)
 
