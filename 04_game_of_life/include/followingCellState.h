@@ -1,3 +1,3 @@
 #pragma onece
 
-int followingCellState(int* actualCellState, int* neighbourhood[8]);
+int followingCellState(int* actualCellState, int (*neighbourhood)[8]);

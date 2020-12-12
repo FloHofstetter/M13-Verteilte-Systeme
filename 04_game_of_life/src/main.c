@@ -2,7 +2,7 @@
 #include "showCells.h"
 #include <stdio.h>
 #include "followingCellState.h"
-#include "followingFieldState.h"
+#include "followingSliceState.h"
 #include "fieldSlice.h"
 #include <string.h>
 #include <unistd.h>
@@ -16,12 +16,12 @@ int main()
 {
     int cellsActualState[MATCHFIELD_H][MATCHFIELD_W] =
     {
-            {1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -30,13 +30,19 @@ int main()
     int cellsNextState[MATCHFIELD_W][MATCHFIELD_H];
 
     int cellSlice[MATCHFIELD_H/2 + 2][MATCHFIELD_W/2 + 2] = {0};
+    int cellSlice2[MATCHFIELD_H/2 + 2][MATCHFIELD_W/2 + 2] = {0};
 
     fieldSlice(MATCHFIELD_H, MATCHFIELD_W, 0, 0, 2, &cellsActualState, &cellSlice);
+
+
+    followingSliceState(MATCHFIELD_H/2 + 2, MATCHFIELD_W/2 + 2, &cellSlice, &cellSlice2);
+
+    show_cells(MATCHFIELD_H/2 + 2, MATCHFIELD_W/2 + 2, cellSlice2);
     for (int y=0; y < 7; y++)
     {
         for(int x=0; x < 7; x++)
         {
-            printf("%i\n", cellSlice[y][x]);
+            // printf("%i\n", cellSlice[y][x]);
         }
     }
 

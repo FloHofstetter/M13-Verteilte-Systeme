@@ -9,6 +9,7 @@ set(SOURCES
         src/showCells.c
         src/fieldSlice.c
         src/followingCellState.c
+        src/followingSliceState.c
         src/followingFieldState.c)
 
 set(HEADERS
@@ -16,6 +17,7 @@ set(HEADERS
         include/showCells.h
         include/fieldSlice.h
         include/followingCellState.h
+        include/followingSliceState.h
         include/followingFieldState.h)
 
 add_executable("gameOfLife" ${SOURCES} ${HEADERS})
