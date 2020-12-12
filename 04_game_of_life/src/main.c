@@ -29,16 +29,27 @@ int main()
     };
     int cellsNextState[MATCHFIELD_W][MATCHFIELD_H];
 
-    int cellSlice[MATCHFIELD_H/2 + 2][MATCHFIELD_W/2 + 2];
+    int cellSlice[MATCHFIELD_H/2 + 2][MATCHFIELD_W/2 + 2] = {0};
 
     fieldSlice(MATCHFIELD_H, MATCHFIELD_W, 0, 0, 2, &cellsActualState, &cellSlice);
-    for(int y=0; y < 5; y++)
+    for (int y=0; y < 7; y++)
+    {
+        for(int x=0; x < 7; x++)
+        {
+            printf("%i\n", cellSlice[y][x]);
+        }
+    }
+
+
+
+    //show_cells(MATCHFIELD_H/2 + 2, MATCHFIELD_W/2 + 2, cellSlice);
+    /*for(int y=0; y < 5; y++)
     {
         for(int x=0; x < 5; x++)
         {
             printf("Y: %i, X: %i, : %i\n",y, x, cellSlice[y][x]);
         }
-    }
+    }*/
 
 }
 

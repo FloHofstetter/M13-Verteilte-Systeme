@@ -2,7 +2,7 @@
 
 int fieldSlice(
         int hTotal, int wTotal, int hStart, int wStart, int slices, int(*fullField)[hTotal][wTotal],
-        int(*fieldSlice)[hTotal/slices][wTotal/slices]
+        int(*fieldSlice)[hTotal/slices + 2][wTotal/slices + 2]
         )
 {
     int hA = hTotal/slices;
@@ -18,17 +18,19 @@ int fieldSlice(
     int x, y, xFull, yFull, xSlice, ySlice;
 
     // Area A
-    for (y=0; y < hA; y++)
+    for (y=0; y < hA; y++)  //
     {
-        for (x=0; x < wA; x++)
+        for (x=0; x < wA; x++)  //
         {
             ySlice = hE + y;
             xSlice = wD + x;
             yFull = hStart + y;
             xFull = wStart + x;
-            *(fieldSlice)[ySlice][xSlice] = 99; //(fullField)[yFull][xFull];
+            (*fieldSlice)[ySlice][xSlice] = (*fullField)[yFull][xFull];
             // printf("Y: %i, X: %i, :%i\n",ySlice, xSlice, *(fieldSlice)[ySlice][xSlice]);
+
         }
+
     }
 
     // Area B
@@ -43,7 +45,7 @@ int fieldSlice(
         {
             yFull -= wTotal;
         }
-        (*fieldSlice)[ySlice][xSlice] = 88; // (*fullField)[yFull][xFull];
+        (*fieldSlice)[ySlice][xSlice] = (*fullField)[yFull][xFull];
     }
 
     // Area C
@@ -68,7 +70,7 @@ int fieldSlice(
         {
             xFull += wTotal;
         }
-        (*fieldSlice)[ySlice][xSlice] = 77; // (*fullField)[yFull][xFull];
+        (*fieldSlice)[ySlice][xSlice] = (*fullField)[yFull][xFull];
     }
 
     // Area D
@@ -83,7 +85,7 @@ int fieldSlice(
     {
         ySlice = hE + y;
         yFull = hStart + y;
-        (*fieldSlice)[ySlice][xSlice] = 66; // (*fullField)[yFull][xFull];
+        (*fieldSlice)[ySlice][xSlice] = (*fullField)[yFull][xFull];
     }
 
     // Area E
@@ -98,7 +100,7 @@ int fieldSlice(
         xSlice = 0 + x;
         xFull = wStart - 1 + x;
         // Over left boarder -> loop right.
-        if (xFull < wTotal)
+        if (xFull < 0)
         {
             xFull += wTotal;
         }
@@ -106,6 +108,6 @@ int fieldSlice(
         {
             xFull -= wTotal;
         }
-        (*fieldSlice)[ySlice][xSlice] = 55; // (*fullField)[yFull][xFull];
+        (*fieldSlice)[ySlice][xSlice] = (*fullField)[yFull][xFull];
     }
 }
