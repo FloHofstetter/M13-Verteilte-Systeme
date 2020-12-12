@@ -1,7 +1,7 @@
 #include "followingCellState.h"
 #define CELLNEIGHBOURS 8
 
-void followingSliceState(int w, int h, int (*cellsIn)[w], int (*cellsOut)[w][h])
+void followingSliceState(int w, int h, int (*cellsIn)[w][h], int (*cellsOut)[w][h])
 {
 
     int x, y;
@@ -18,8 +18,8 @@ void followingSliceState(int w, int h, int (*cellsIn)[w], int (*cellsOut)[w][h])
             {
                 int neighbourXCoordinate = x + neighbourX[neighbour];
                 int neighbourYCoordinate = y + neighbourY[neighbour];
-                neighbours[neighbour] = cellsIn[neighbourYCoordinate][neighbourXCoordinate];
-                (*cellsOut)[y][x] = followingCellState(&cellsIn[y][x], &neighbours);
+                neighbours[neighbour] = (*cellsIn)[neighbourYCoordinate][neighbourXCoordinate];
+                (*cellsOut)[y][x] = followingCellState(&((*cellsIn)[y][x]), &neighbours);
             }
         }
     }
