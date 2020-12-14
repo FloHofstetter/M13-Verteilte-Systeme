@@ -41,7 +41,7 @@ int fieldSlice(
     {
         ySlice = hE + y;
         yFull = hStart + y;
-        if (yFull > hTotal)
+        if (yFull >= hTotal)
         {
             yFull -= hTotal;
         }

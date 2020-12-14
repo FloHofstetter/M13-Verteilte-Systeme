@@ -1,12 +1,10 @@
-#include "main.h"
 #include "showCells.h"
-#include <stdio.h>
 #include "followingCellState.h"
 #include "followingSliceState.h"
 #include "fieldSlice.h"
+#include "fieldFuse.h"
 #include <string.h>
 #include <unistd.h>
-#include <mpi.h>
 
 // Matchfield
 #define MATCHFIELD 10
@@ -25,17 +23,21 @@ int main()
     int cellsActualState[MATCHFIELD_H][MATCHFIELD_W] =
     {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 1, 1, 1, 0},
-            {0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+            {0, 0, 0, 1, 1, 1, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     };
-    int cellsNextState[MATCHFIELD_W][MATCHFIELD_H];
+    int cellsNextState[MATCHFIELD_W][MATCHFIELD_H] = {0};
+
+    for (int i=0; i<100; i++)
+    {
+
 
     // Actual slices
     int (cellSliceActual[NSLICES_H][NSLICES_W])[SLICE_FIELDS_H + 2][SLICE_FIELDS_W + 2];
@@ -53,8 +55,7 @@ int main()
         }
     }
 
-    // Calculate new state for slices
-    // Later here come MPI-Calls!
+    // Slice field
     for (int hSlice=0; hSlice < NSLICES_H; hSlice++)
     {
         for(int wSlice=0; wSlice < NSLICES_W; wSlice++)
@@ -64,7 +65,7 @@ int main()
         }
     }
 
-    // New slices
+    // New slices - dec and init
     int (newSlices[NSLICES_H][NSLICES_W])[SLICE_FIELDS_H + 2][SLICE_FIELDS_W + 2];
     for(int hSlices=0; hSlices < NSLICES_H; hSlices++)
     {
@@ -91,48 +92,30 @@ int main()
     }
 
     // Fuse slices
-    // newSlices[0][0] = &cellSliceNew0;
-    // newSlices[0][1] = &cellSliceNew1;
-    // newSlices[1][0] = &cellSliceNew2;
-    // newSlices[1][1] = &cellSliceNew3;
-
-
-    // Display fused slices
-    // show_cells(MATCHFIELD_H/2 + 2, MATCHFIELD_W/2 + 2, cellSliceNew1);
-
-    // Fused new big plane is now old plane
-
-
-
-    for (int y=0; y < 7; y++)
+    for (int hSlice=0; hSlice < NSLICES_H; hSlice++)
     {
-        for(int x=0; x < 7; x++)
+        for (int wSlice = 0; wSlice < NSLICES_W; wSlice++)
         {
-            printf("%i ", (newSlices[0][0])[y][x]    ); // [y][x]
+            fieldFuse(MATCHFIELD_H, MATCHFIELD_W,  SLICE_FIELDS_H*hSlice, SLICE_FIELDS_W*wSlice, NSLICES,
+                      &cellsNextState, &(newSlices[hSlice][wSlice]));
         }
-        printf("\n");
     }
 
 
+    // Show Numbers
+    //showNumbers(MATCHFIELD_H, MATCHFIELD_W, &cellsNextState);
 
-    //show_cells(MATCHFIELD_H/2 + 2, MATCHFIELD_W/2 + 2, cellSlice);
-    /*for(int y=0; y < 5; y++)
-    {
-        for(int x=0; x < 5; x++)
-        {
-            printf("Y: %i, X: %i, : %i\n",y, x, cellSlice[y][x]);
-        }
-    }*/
+        show_cells(MATCHFIELD_H, MATCHFIELD_W, cellsNextState);
+
+        memcpy(&cellsActualState, &cellsNextState, MATCHFIELD_W * MATCHFIELD_H * sizeof(int));
+        usleep(250*1e3); // ms
+    }
+
 
 }
 
 
+
     /*
-    for (int i=0; i<100; i++)
-    {
-        show_cells(MATCHFIELD_H, MATCHFIELD_W, cellsActualState);
-        followingFieldState(MATCHFIELD_W, MATCHFIELD_H, &cellsActualState, &cellsNextState);
-        memcpy(&cellsActualState, &cellsNextState, MATCHFIELD_W * MATCHFIELD_H * sizeof(int));
-        usleep(250*1e3); // ms
-    }
+
      */
