@@ -7,6 +7,7 @@ set(CMAKE_C_COMPILER mpicc)
 set(SOURCES
         src/main.c
         src/showCells.c
+        src/fieldFuse.c
         src/fieldSlice.c
         src/followingCellState.c
         src/followingSliceState.c
@@ -15,6 +16,7 @@ set(SOURCES
 set(HEADERS
         include/main.h
         include/showCells.h
+        include/fieldFuse.h
         include/fieldSlice.h
         include/followingCellState.h
         include/followingSliceState.h

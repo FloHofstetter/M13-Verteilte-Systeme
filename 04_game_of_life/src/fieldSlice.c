@@ -27,8 +27,8 @@ int fieldSlice(
             yFull = hStart + y;
             xFull = wStart + x;
             (*fieldSlice)[ySlice][xSlice] = (*fullField)[yFull][xFull];
-            // printf("Y: %i, X: %i, :%i\n",ySlice, xSlice, *(fieldSlice)[ySlice][xSlice]);
-
+            // printf("Y: %i, X: %i, :%i\n",ySlice, xSlice, (*fieldSlice)[ySlice][xSlice]);
+            // printf("Y: %i, X: %i, :%i\n",yFull, xFull, (*fullField)[yFull][xFull]);
         }
 
     }
@@ -41,11 +41,17 @@ int fieldSlice(
     {
         ySlice = hE + y;
         yFull = hStart + y;
-        if (yFull > wTotal)
+        if (yFull > hTotal)
         {
-            yFull -= wTotal;
+            yFull -= hTotal;
+        }
+        if (xFull > wTotal - 1)
+        {
+            xFull -= wTotal;
         }
         (*fieldSlice)[ySlice][xSlice] = (*fullField)[yFull][xFull];
+        // printf("Y: %i, X: %i, :%i\n",ySlice, xSlice, (*fieldSlice)[ySlice][xSlice]);
+        // printf("Y: %i, X: %i, :%i\n",yFull, xFull, (*fullField)[yFull][xFull]);
     }
 
     // Area C
@@ -61,23 +67,34 @@ int fieldSlice(
         xSlice = 0 + x;
         xFull = wStart - 1 + x;
         // Over right boarder -> loop left.
-        if (xFull > wTotal)
+        if (xFull > wTotal - 1)
         {
-            xFull -= wTotal;
+            xFull -= wTotal - 1;
         }
         // Over left boarder -> loop right.
         else if (xFull < 0)
         {
             xFull += wTotal;
         }
+        if (yFull > hTotal - 1)
+        {
+            yFull -= hTotal;
+        }
+            // Over left boarder -> loop right.
+        else if (yFull < 0)
+        {
+            yFull += hTotal;
+        }
         (*fieldSlice)[ySlice][xSlice] = (*fullField)[yFull][xFull];
+        // printf("Y: %i, X: %i, :%i\n",ySlice, xSlice, (*fieldSlice)[ySlice][xSlice]);
+        // printf("Y: %i, X: %i, :%i\n",yFull, xFull, (*fullField)[yFull][xFull]);
     }
 
     // Area D
     xSlice = 0;
     xFull = wStart - 1;
     // Over left boarder -> loop right.
-    if (xFull <  wTotal)
+    if (xFull <  0)
     {
         xFull += wTotal;
     }
@@ -86,12 +103,14 @@ int fieldSlice(
         ySlice = hE + y;
         yFull = hStart + y;
         (*fieldSlice)[ySlice][xSlice] = (*fullField)[yFull][xFull];
+        // printf("Y: %i, X: %i, :%i\n",ySlice, xSlice, (*fieldSlice)[ySlice][xSlice]);
+        // printf("Y: %i, X: %i, :%i\n",yFull, xFull, (*fullField)[yFull][xFull]);
     }
 
     // Area E
     ySlice = 0;
     yFull = hStart - 1;
-    if (yFull < hTotal)
+    if (yFull < 0)
     {
         yFull += hTotal;
     }
@@ -104,10 +123,19 @@ int fieldSlice(
         {
             xFull += wTotal;
         }
-        else if (xFull > wTotal)
+        else if (xFull >= wTotal)
         {
             xFull -= wTotal;
         }
         (*fieldSlice)[ySlice][xSlice] = (*fullField)[yFull][xFull];
+        // printf("Y: %i, X: %i, :%i\n",ySlice, xSlice, (*fieldSlice)[ySlice][xSlice]);
+        // printf("Y: %i, X: %i, :%i\n",yFull, xFull, (*fullField)[yFull][xFull]);
+    }
+    for (int y=0; y < 7; y++)
+    {
+        for(int x=0; x < 7; x++)
+        {
+            // printf("Field: Y:%i X:%i\n", ySlice, xSlice);
+        }
     }
 }
