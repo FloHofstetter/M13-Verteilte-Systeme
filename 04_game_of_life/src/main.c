@@ -3,6 +3,7 @@
 #include "followingSliceState.h"
 #include "fieldSlice.h"
 #include "fieldFuse.h"
+#include "inicializeSlices.h"
 #include <string.h>
 #include <unistd.h>
 
@@ -41,19 +42,8 @@ int main()
 
     // Actual slices
     int (cellSliceActual[NSLICES_H][NSLICES_W])[SLICE_FIELDS_H + 2][SLICE_FIELDS_W + 2];
-    for(int hSlices=0; hSlices < NSLICES_H; hSlices++)
-    {
-        for(int wSlices=0; wSlices < NSLICES_W; wSlices++)
-        {
-            for (int y=0; y < SLICE_FIELDS_H + 2; y++)
-            {
-                for(int x=0; x < SLICE_FIELDS_W + 2; x++)
-                {
-                    (cellSliceActual[hSlices][wSlices])[y][x] = -99;
-                }
-            }
-        }
-    }
+
+    inicializeSlices(NSLICES_H, NSLICES_W, SLICE_FIELDS_H, SLICE_FIELDS_W, &cellSliceActual);
 
     // Slice field
     for (int hSlice=0; hSlice < NSLICES_H; hSlice++)
